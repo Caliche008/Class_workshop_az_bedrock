@@ -1,0 +1,19 @@
+# --- Terraform ---
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# --- Credenciales de AWS (Seguridad) ---
+.aws/
+credentials
+*.pem
+
+# --- Archivos de Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Archivos del Sistema ---
+.DS_Store
+Thumbs.db
