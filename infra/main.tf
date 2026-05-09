@@ -11,7 +11,7 @@ resource "aws_s3_bucket_website_configuration" "frontend" {
 }
 
 resource "aws_s3_bucket_public_access_block" "frontend" {
-  bucket = aws_s3_bucket.frontend.id
+  bucket                  = aws_s3_bucket.frontend.id
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
@@ -19,7 +19,7 @@ resource "aws_s3_bucket_public_access_block" "frontend" {
 }
 
 resource "aws_s3_bucket_policy" "frontend" {
-  bucket = aws_s3_bucket.frontend.id
+  bucket     = aws_s3_bucket.frontend.id
   depends_on = [aws_s3_bucket_public_access_block.frontend]
   policy = jsonencode({
     Version = "2012-10-17"
@@ -41,8 +41,8 @@ resource "aws_iam_role" "lambda_role" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
       Principal = { Service = "lambda.amazonaws.com" }
     }]
   })
@@ -71,7 +71,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
 resource "aws_lambda_function" "ai_api" {
   function_name    = "carlos-ortiz-ai-practitioner-agente"
   role             = aws_iam_role.lambda_role.arn
-  handler          = "handler.lambda_handler" 
+  handler          = "handler.lambda_handler"
   runtime          = "python3.12"
   filename         = "../app/lambda/lambda.zip"
   source_code_hash = filebase64sha256("../app/lambda/lambda.zip")
@@ -90,9 +90,9 @@ resource "aws_apigatewayv2_api" "api" {
 }
 
 resource "aws_apigatewayv2_integration" "lambda" {
-  api_id           = aws_apigatewayv2_api.api.id
-  integration_type = "AWS_PROXY"
-  integration_uri  = aws_lambda_function.ai_api.invoke_arn
+  api_id                 = aws_apigatewayv2_api.api.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.ai_api.invoke_arn
   payload_format_version = "2.0"
 }
 

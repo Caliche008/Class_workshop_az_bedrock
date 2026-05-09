@@ -1,4 +1,4 @@
-const API_URL = "";
+const API_URL = "https://z48v0kk8e3.execute-api.us-east-1.amazonaws.com/ask";
 
 const chatBox = document.getElementById("chat-box");
 
